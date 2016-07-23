@@ -11,10 +11,10 @@ UCLASS()
 class BATTLETANK_API ATankPlayerController : public APlayerController
 {
 	GENERATED_BODY()
-	
-public: 
+
+public:
 	ATank* GetControlledTank() const;
-	
+
 	void BeginPlay() override;  // override checks to make sure you are using the right function from higher up in the heirarchy.
 								// begin play is in AActor ...
 								// In Actor, BeginPlay was written as a Virtual function which says it can be overwritten by any ansestor
@@ -24,4 +24,8 @@ public:
 
 	// Start teh tank moving the barrel so that a shot would hit where the sroosshair intersects the world.
 	void AimTowardsCrosshair();
+
+private:
+	bool GetSightRayHitLocation(FVector& HitLocation) const; // return an OUT Parameter, true if llandscape hit
+
 };
