@@ -12,7 +12,7 @@ class BATTLETANK_API ATankPlayerController : public APlayerController
 {
 	GENERATED_BODY()
 
-public:
+private:
 	ATank* GetControlledTank() const;
 
 	void BeginPlay() override;  // override checks to make sure you are using the right function from higher up in the heirarchy.
@@ -25,7 +25,13 @@ public:
 	// Start teh tank moving the barrel so that a shot would hit where the sroosshair intersects the world.
 	void AimTowardsCrosshair();
 
-private:
+
 	bool GetSightRayHitLocation(FVector& HitLocation) const; // return an OUT Parameter, true if llandscape hit
+
+	UPROPERTY(EditAnywhere)
+	float CrossHairXLocation = 0.5f;
+
+	UPROPERTY(EditAnywhere)
+		float CrossHairYLocation = 0.3333f;
 
 };
