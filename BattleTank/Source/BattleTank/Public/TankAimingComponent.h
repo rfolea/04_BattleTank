@@ -23,7 +23,7 @@ public:
 	// Called every frame
 	virtual void TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction ) override;
 
-	void AimAt(FVector HitLocation);  // Tell the Tank to aim at a partiicular worldspace 
+	void AimAt(FVector HitLocation, float LaunchSpeed);  // Tell the Tank to aim at a partiicular worldspace 
 
 private:
 	UStaticMeshComponent* Barrel = nullptr;
