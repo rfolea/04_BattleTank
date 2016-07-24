@@ -52,16 +52,12 @@ void ATankPlayerController::AimTowardsCrosshair()
 {
 	if (!GetControlledTank()) { return; } // doesn't make sense to aim if we don't have a tank to aim ...
 	
-
 	FVector HitLocation;  //Out parameter
-
 	if (GetSightRayHitLocation(HitLocation)) // Doesn't change anything, but does ray trace and if true log it out.
 	{
 		GetControlledTank()->AimAt(HitLocation);
 	}
 
- 
-	
 	return;
 }
 
