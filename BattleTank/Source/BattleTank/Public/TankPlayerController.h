@@ -25,7 +25,6 @@ private:
 	// Start teh tank moving the barrel so that a shot would hit where the sroosshair intersects the world.
 	void AimTowardsCrosshair();
 
-
 	bool GetSightRayHitLocation(FVector& HitLocation) const; // return an OUT Parameter, true if llandscape hit
 
 	UPROPERTY(EditAnywhere)
@@ -34,6 +33,10 @@ private:
 	UPROPERTY(EditAnywhere)
 		float CrossHairYLocation = 0.3333f;
 
-	bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const;
+	bool GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const;
+	bool GetLookVectorHitLocation(FVector LookDirection, FVector& HitLocation) const;
+
+	UPROPERTY(EditAnywhere)
+	float LineTraceRange = 1000000; // Max Range of line trace for aiming tank (10Km in cm)
 
 };
