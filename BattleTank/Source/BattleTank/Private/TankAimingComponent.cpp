@@ -11,7 +11,7 @@ UTankAimingComponent::UTankAimingComponent()
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
 	bWantsBeginPlay = true;
-	PrimaryComponentTick.bCanEverTick = true;
+	PrimaryComponentTick.bCanEverTick = true;  // TODO Should this ever tick?
 
 	// ...
 }
@@ -50,9 +50,15 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
 		auto TankName = GetOwner()->GetName();
 		MoveBarrelTowards(AimDirection);
+		auto Time = GetWorld()->GetTimeSeconds();
+		UE_LOG(LogTemp, Warning, TEXT("%f: Aim Solution Found"), Time);
 //		UE_LOG(LogTemp, Warning, TEXT("Tank %s Aiming at %s"),*TankName, *AimDirection.ToString());
 	}
-
+	else
+	{
+		auto Time = GetWorld()->GetTimeSeconds();
+		UE_LOG(LogTemp, Warning, TEXT("%f: No Aiming Solution Found"), Time);
+	}
 	//If No solution do nothing
 }
 
@@ -63,7 +69,7 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	auto AimAsRotator = AimDirection.Rotation();                 // Aim direction sis where we need to be to shoot.
 	auto DeltaRotator = AimAsRotator - BarrelRotator;            // So this is the difference bwetween them
 
-	Barrel->Elevate(5); // TODO Remove Magic Number
+	Barrel->Elevate(DeltaRotator.Pitch); 
 
 	return;
 }
