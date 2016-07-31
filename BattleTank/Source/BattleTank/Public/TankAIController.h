@@ -22,9 +22,4 @@ private:
 	virtual void Tick(float DeltaTime) override;  // virtual is optional - says if we made a child of this onew any child could use it.
 												  // override makes sure there IS a overridable routine in the parent class
 
-	ATank* GetControlledTank() const;
-
-	ATank* GetPlayerTank() const;
-	
-	
 };
