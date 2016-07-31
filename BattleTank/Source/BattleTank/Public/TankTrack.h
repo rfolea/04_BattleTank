@@ -19,5 +19,9 @@ public:
 	void SetThrottle(float Throttle);
 	
 	// TODO Clamp actual throttle value in Tank BP Input ...
+
+	// Max force per track in Nwetons
+	UPROPERTY(EditDefaultsOnly)
+		float TrackMaxDrivingForce = 400000;  // assume tank is 40,000kg  and 10 g accel
 	
 };
