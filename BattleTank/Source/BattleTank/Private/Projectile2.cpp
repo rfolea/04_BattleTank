@@ -10,6 +10,8 @@ AProjectile2::AProjectile2()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(FName("Projectile Movement"));
+	ProjectileMovement->bAutoActivate = false;  // don't create until we say so (when we fire it)
 }
 
 // Called when the game starts or when spawned
@@ -26,3 +28,12 @@ void AProjectile2::Tick( float DeltaTime )
 
 }
 
+void AProjectile2::LaunchProjectile(float Speed)
+{
+	auto Time = GetWorld()->GetTimeSeconds();
+	UE_LOG(LogTemp, Warning, TEXT("%f: Projectile Fires at%f:"), Time, Speed);
+
+	//In Tank.cpp we vave the projectile a location and rotation, so now just use the forward vcector ...
+	ProjectileMovement->SetVelocityInLocalSpace(FVector::ForwardVector*Speed);
+	ProjectileMovement->Activate(); // Activate the motion
+}
