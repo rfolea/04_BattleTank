@@ -30,10 +30,7 @@ void AProjectile2::Tick( float DeltaTime )
 
 void AProjectile2::LaunchProjectile(float Speed)
 {
-	auto Time = GetWorld()->GetTimeSeconds();
-	UE_LOG(LogTemp, Warning, TEXT("%f: Projectile Fires at%f:"), Time, Speed);
-
-	//In Tank.cpp we vave the projectile a location and rotation, so now just use the forward vcector ...
+	//In Tank.cpp we have the projectile a location and rotation, so now just use the forward vcector ...
 	ProjectileMovement->SetVelocityInLocalSpace(FVector::ForwardVector*Speed);
 	ProjectileMovement->Activate(); // Activate the motion
 }
