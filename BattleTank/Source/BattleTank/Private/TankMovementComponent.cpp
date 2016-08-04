@@ -29,3 +29,11 @@ void UTankMovementComponent::IntendTurnRight(float Throw)
 	RightTrack->SetThrottle(-Throw);
 	// Prevent double speed due to dual control (In BluePrint Input Setup?)
 }
+
+void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed)
+{
+	// No need to call super - we are replacing functionality
+	auto TankName = GetOwner()->GetName();                                // We're on a component so can just do a GetName()
+	auto MoveVelocityString = MoveVelocity.ToString();
+	UE_LOG(LogTemp, Warning, TEXT("%s   Vectoring to: %s"), *TankName, *MoveVelocityString);
+}
