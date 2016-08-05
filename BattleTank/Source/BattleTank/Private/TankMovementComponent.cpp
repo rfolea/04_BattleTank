@@ -15,7 +15,6 @@ void UTankMovementComponent::IntendMoveForward(float Throw)
 	if (!LeftTrack || !RightTrack) { return; }
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(Throw);
-	// Prevent double speed due to dual control (In BluePrint Input Setup?)
 }
 
 void UTankMovementComponent::IntendTurnRight(float Throw)
@@ -31,7 +30,6 @@ void UTankMovementComponent::IntendTurnRight(float Throw)
 	}
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(-Throw);
-	// Prevent double speed due to dual control (In BluePrint Input Setup?)
 }
 
 void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed)
