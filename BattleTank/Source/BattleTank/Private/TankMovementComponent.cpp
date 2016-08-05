@@ -24,7 +24,11 @@ void UTankMovementComponent::IntendTurnRight(float Throw)
 	//auto Name = GetName();
 	//UE_LOG(LogTemp, Warning, TEXT("Intend Move Forward Throw: %f"), Throw)
 
-	if (!LeftTrack || !RightTrack) { return; }
+	if (!LeftTrack || !RightTrack) 
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Missing Left or Right TankTrack Pointer"), Throw)
+		return;
+	}
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(-Throw);
 	// Prevent double speed due to dual control (In BluePrint Input Setup?)
@@ -33,7 +37,16 @@ void UTankMovementComponent::IntendTurnRight(float Throw)
 void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed)
 {
 	// No need to call super - we are replacing functionality
-	auto TankName = GetOwner()->GetName();                                // We're on a component so can just do a GetName()
-	auto MoveVelocityString = MoveVelocity.ToString();
-	UE_LOG(LogTemp, Warning, TEXT("%s   Vectoring to: %s"), *TankName, *MoveVelocityString);
+
+	auto TankForward = GetOwner()->GetActorForwardVector().GetSafeNormal();  // Current Heading - unit vector direction relative to the global
+	auto AIForwardIntention = MoveVelocity.GetSafeNormal();                  // Direction we WANT to be heading    
+
+	float ForwardVelocity = FVector::DotProduct(TankForward, AIForwardIntention);
+	IntendMoveForward(ForwardVelocity);
+
+	float RotateVelocity = FVector::CrossProduct(TankForward, AIForwardIntention).Z;
+	IntendTurnRight(RotateVelocity);
+
+	auto TankName = GetOwner()->GetName();
+	UE_LOG(LogTemp, Warning, TEXT("%s   Rotating to: %f"), *TankName, RotateVelocity);
 }
