@@ -12,22 +12,14 @@ void UTankMovementComponent::Initialise(UTankTrack* LeftTrackToSet, UTankTrack* 
 
 void UTankMovementComponent::IntendMoveForward(float Throw)
 {
-	if (!LeftTrack || !RightTrack) { return; }
+	if (!ensure(LeftTrack && RightTrack)) { return; }
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(Throw);
 }
 
 void UTankMovementComponent::IntendTurnRight(float Throw)
 {
-	//auto Time = GetWorld()->GetTimeSeconds();
-	//auto Name = GetName();
-	//UE_LOG(LogTemp, Warning, TEXT("Intend Move Forward Throw: %f"), Throw)
-
-	if (!LeftTrack || !RightTrack) 
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Missing Left or Right TankTrack Pointer"), Throw)
-		return;
-	}
+	if (!ensure(LeftTrack && RightTrack)) { return; }
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(-Throw);
 }
