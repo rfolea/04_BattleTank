@@ -7,7 +7,6 @@
 
 // Forward Declarations
 class UTankBarrel;            
-class UTankAimingComponent;
 class AProjectile2;
 
 UCLASS()
@@ -17,15 +16,9 @@ class BATTLETANK_API ATank : public APawn
 
 public:
 
-	void AimAt(FVector HitLocation);
-
 	UFUNCTION(BlueprintCallable, Category = "Firing")
 	void Fire();                  // will always fire in direction barrel is pointing, so no need for params
 
-protected:
-	UPROPERTY(BlueprintReadOnly)
-	UTankAimingComponent* TankAimingComponent = nullptr;
-	
 private:
 	// Sets default values for this pawn's properties
 	ATank();
@@ -36,13 +29,11 @@ private:
 	TSubclassOf<AProjectile2> ProjectileBlueprint;
 	//	UClass* ProjectileBlueprint; // Alternative - see lecture note TSubclass of ...
 
-	// TODO - Remove after firing is moved to aiming component
-	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-	float LaunchSpeed = 4000; 
-
-
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float RelaodTimeInSeconds = 3;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	float LaunchSpeed = 4000;
 	
     // local barrel reference for spawing projectile
 	UTankBarrel* Barrel = nullptr; // TODO - Remove this later

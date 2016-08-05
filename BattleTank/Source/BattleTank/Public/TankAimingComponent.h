@@ -28,7 +28,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 	void Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet); // Used in Tank BP Event Graph
 
-	void AimAt(FVector HitLocation, float LaunchSpeed);  // Tell the Tank to aim at a partiicular worldspace 
+	void AimAt(FVector HitLocation);  // Tell the Tank to aim at a partiicular worldspace 
 
 protected:
 	UPROPERTY(BlueprintReadOnly, category = "State")
@@ -40,6 +40,9 @@ private:
 
 	UTankBarrel* Barrel = nullptr;
 	UTankTurret* Turret = nullptr;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	float LaunchSpeed = 4000;
 
 	void	MoveBarrelTowards(FVector AimDirection);
 

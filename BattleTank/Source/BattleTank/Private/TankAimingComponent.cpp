@@ -23,12 +23,8 @@ void UTankAimingComponent::Initialise(UTankBarrel* BarrelToSet, UTankTurret* Tur
 	Turret = TurretToSet;
 }
 
-void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
+void UTankAimingComponent::AimAt(FVector HitLocation)
 {
-//	auto OurTankName = GetOwner()->GetName(); // comes out as an FString
-//	auto BarrelLocation = Barrel->GetComponentLocation().ToString();
-//	UE_LOG(LogTemp, Warning, TEXT("%s aiming at %s from %s"), *OurTankName, *HitLocation.ToString(), *BarrelLocation);
-
 	if (!ensure(Barrel)) { return; } // protect our barrel reference
 
 	FVector OutLaunchVelocity;
