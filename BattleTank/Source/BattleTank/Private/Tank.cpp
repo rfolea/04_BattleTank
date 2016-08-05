@@ -11,17 +11,12 @@ ATank::ATank()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
-
-	auto TankName = GetName();
-	UE_LOG(LogTemp, Warning, TEXT("%s AELOF: C++ Tank Contructor"), *TankName);
 }
 
 void ATank::BeginPlay()
 {
 	Super::BeginPlay();  // Needed for BP beginPlay to run ...
-
-	auto TankName = GetName();
-	UE_LOG(LogTemp, Warning, TEXT("%s AELOF: C++ Tank BeginPlay()"), *TankName);
+	TankAimingComponent = FindComponentByClass < UTankAimingComponent>();  // TODO Temporary until we get rid of aiming component from tank
 
 	return;
 }

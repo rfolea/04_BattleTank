@@ -36,8 +36,11 @@ private:
 	TSubclassOf<AProjectile2> ProjectileBlueprint;
 	//	UClass* ProjectileBlueprint; // Alternative - see lecture note TSubclass of ...
 
+	// TODO - Remove after firing is moved to aiming component
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float LaunchSpeed = 4000; 
+
+
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float RelaodTimeInSeconds = 3;
 	

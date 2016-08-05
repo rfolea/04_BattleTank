@@ -37,6 +37,6 @@ void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool
 	float RotateVelocity = FVector::CrossProduct(TankForward, AIForwardIntention).Z;
 	IntendTurnRight(RotateVelocity);
 
-	auto TankName = GetOwner()->GetName();
-	UE_LOG(LogTemp, Warning, TEXT("%s   Rotating to: %f"), *TankName, RotateVelocity);
+//	auto TankName = GetOwner()->GetName();
+//	UE_LOG(LogTemp, Warning, TEXT("%s   Rotating to: %f"), *TankName, RotateVelocity);
 }
