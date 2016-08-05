@@ -29,6 +29,7 @@ public:
 	void Fire();                  // will always fire in direction barrel is pointing, so no need for params
 
 protected:
+	UPROPERTY(BlueprintReadOnly)
 	UTankAimingComponent* TankAimingComponent = nullptr;
 
 	UPROPERTY(BlueprintReadOnly)

@@ -13,9 +13,11 @@ class BATTLETANK_API ATankPlayerController : public APlayerController
 {
 	GENERATED_BODY()
 
-private:
+protected: // so subclasses can access it
+	UFUNCTION(BluePrintCallable, Category = "Setup")
 	ATank* GetControlledTank() const;
 
+private:
 	void BeginPlay() override;  // override checks to make sure you are using the right function from higher up in the heirarchy.
 								// begin play is in AActor ...
 								// In Actor, BeginPlay was written as a Virtual function which says it can be overwritten by any ansestor
