@@ -7,7 +7,11 @@
 
 // Forward Declaration
 class ATank;
+class UTankAimingComponent;
 
+/**
+* Responsible for helping the player aim
+*/
 UCLASS()
 class BATTLETANK_API ATankPlayerController : public APlayerController
 {
@@ -16,6 +20,9 @@ class BATTLETANK_API ATankPlayerController : public APlayerController
 protected: // so subclasses can access it
 	UFUNCTION(BluePrintCallable, Category = "Setup")
 	ATank* GetControlledTank() const;
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
+	void FoundAimingComponent(UTankAimingComponent* AimingCompRef);
 
 private:
 	void BeginPlay() override;  // override checks to make sure you are using the right function from higher up in the heirarchy.
