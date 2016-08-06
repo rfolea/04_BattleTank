@@ -23,5 +23,10 @@ public:
 	// Max force per track in Nwetons
 	UPROPERTY(EditDefaultsOnly)
 		float TrackMaxDrivingForce = 400000;  // assume tank is 40,000kg  and 10 g accel
+
+private:
+	UTankTrack();
+
+	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
 	
 };
