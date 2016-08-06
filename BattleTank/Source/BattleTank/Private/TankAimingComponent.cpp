@@ -3,6 +3,7 @@
 #include "BattleTank.h"
 #include "TankBarrel.h"  // can't use forward reference because we are actually calling a method below ...
 #include "TankTurret.h"
+#include "Projectile2.h"
 #include "TankAimingComponent.h"
 
 
@@ -68,4 +69,25 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	Turret->Rotate(DeltaRotator.Yaw);
 
 	return;
+}
+
+void UTankAimingComponent::Fire()
+{
+	if (!ensure(Barrel && ProjectileBlueprint)) { return; }
+	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime > RelaodTimeInSeconds);  // returns a double
+
+
+	if (isReloaded) {
+		// else spawn a projectile at socket location
+		auto Projectile =
+			GetWorld()->SpawnActor<AProjectile2>(
+				ProjectileBlueprint,
+				Barrel->GetSocketLocation(FName("Projectile")),  // Copied FName from Barrel BP socket name
+				Barrel->GetSocketRotation(FName("Projectile"))  // Copied FName from Barrel BP socket name
+				);
+
+		Projectile->LaunchProjectile(LaunchSpeed);
+		LastFireTime = FPlatformTime::Seconds();
+	}
+
 }

@@ -1,8 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "BattleTank.h"
-#include "TankBarrel.h"
-#include "Projectile2.h"
 #include "Tank.h"
 
 // Sets default values
@@ -12,30 +10,6 @@ ATank::ATank()
 	PrimaryActorTick.bCanEverTick = false;
 }
 
-void ATank::BeginPlay()
-{
-	Super::BeginPlay();  // Needed for BP beginPlay to run ...
-	return;
-}
-
-void ATank::Fire()
-{
-	if (!ensure(Barrel)) { return; }
-	bool isReloaded = (FPlatformTime::Seconds()-LastFireTime > RelaodTimeInSeconds);  // returns a double
 
 
-	if (isReloaded) {
-		// else spawn a projectile at socket location
-		auto Projectile =
-			GetWorld()->SpawnActor<AProjectile2>(
-				ProjectileBlueprint,
-				Barrel->GetSocketLocation(FName("Projectile")),  // Copied FName from Barrel BP socket name
-				Barrel->GetSocketRotation(FName("Projectile"))  // Copied FName from Barrel BP socket name
-				);
-
-		Projectile->LaunchProjectile(LaunchSpeed);
-		LastFireTime = FPlatformTime::Seconds();
-	}
-
-}
 
