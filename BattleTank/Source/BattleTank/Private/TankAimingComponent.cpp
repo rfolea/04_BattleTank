@@ -96,8 +96,17 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	auto AimAsRotator = AimDirection.Rotation();                 // Aim direction sis where we need to be to shoot.
 	auto DeltaRotator = AimAsRotator - BarrelRotator;            // So this is the difference bwetween them
 
+	// Always Yaw the shortest way.
 	Barrel->Elevate(DeltaRotator.Pitch); 
-	Turret->Rotate(DeltaRotator.Yaw);
+	if (FMath::Abs(DeltaRotator.Yaw) < 180)
+	{
+		Turret->Rotate(DeltaRotator.Yaw);
+	}
+	else
+	{
+		Turret->Rotate(-DeltaRotator.Yaw);
+	}
+
 
 	return;
 }
