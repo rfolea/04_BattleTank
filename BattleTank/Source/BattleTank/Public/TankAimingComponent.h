@@ -34,6 +34,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Firing")
 	void Fire();                // will always fire in direction barrel is pointing, so no need for params
 
+	EFiringState GetFiringState() const;  // const because we don't want it changing any of the member variables
+
 protected:
 	UPROPERTY(BlueprintReadOnly, category = "State")
 	EFiringState FiringState = EFiringState::Reloading;

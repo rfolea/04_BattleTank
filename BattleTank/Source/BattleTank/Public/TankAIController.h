@@ -9,6 +9,11 @@ UCLASS()
 class BATTLETANK_API ATankAIController : public AAIController
 {
 	GENERATED_BODY()
+
+protected:
+	// How close can the AI tank get to the player
+	UPROPERTY(EditDefaultsOnly, category = "Setup") 
+		float AcceptanceRadius = 8000;
 	
 private:
 
@@ -18,9 +23,5 @@ private:
 
 	virtual void Tick(float DeltaTime) override;  // virtual is optional - says if we made a child of this onew any child could use it.
 												  // override makes sure there IS a overridable routine in the parent class
-
-	// How close can the AI tank get to the player
-	float AcceptanceRadius = 3000;
-
 
 };
