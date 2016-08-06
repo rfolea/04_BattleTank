@@ -5,32 +5,46 @@
 
 UTankTrack::UTankTrack()
 {
-	PrimaryComponentTick.bCanEverTick = true;
+	PrimaryComponentTick.bCanEverTick = false;
 }
 
-void UTankTrack::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
+void UTankTrack::BeginPlay()
 {
-	// Calculate slippage speed - cross product
-	auto SlippageSpeed = FVector::DotProduct(GetRightVector(), GetComponentVelocity()); // "GetRightVector()" of THIS component
+	OnComponentHit.AddDynamic(this, &UTankTrack::OnHit);
+}
 
+void UTankTrack::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
+{
+	DriveTrack();
+	ApplySidewaysForce();
+	CurrentThrottle = 0; // Reset throttle.
+}
+
+void UTankTrack::SetThrottle(float Throttle)
+{
+	CurrentThrottle = FMath::Clamp<float>(CurrentThrottle + Throttle, -1, 1);
+
+	return;
+}
+
+void UTankTrack::DriveTrack()
+{
+	auto ForceApplied = GetForwardVector() * CurrentThrottle * TrackMaxDrivingForce;
+	auto ForceLocation = GetComponentLocation();    // Location of this track - see BP xyz vector
+	auto TankRoot = Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent());
+	TankRoot->AddForceAtLocation(ForceApplied, ForceLocation);
+}
+
+void UTankTrack::ApplySidewaysForce()
+{
 	// Work out required accel this frame to correct (speed over time)
+	auto SlippageSpeed = FVector::DotProduct(GetRightVector(), GetComponentVelocity()); // "GetRightVector()" of THIS component
+	auto DeltaTime = GetWorld()->GetDeltaSeconds();
 	auto CorrectionAccelration = -SlippageSpeed / DeltaTime * GetRightVector();
 
 	// Calculate and apply sideways force (F = M a)
 	auto TankRoot = Cast<UStaticMeshComponent>(GetOwner()->GetRootComponent());
 	auto CorrectionForce = (TankRoot->GetMass() * CorrectionAccelration) / 2;  // divide by two becasue there are two tracks
 	TankRoot->AddForce(CorrectionForce);
+
 }
-
-void UTankTrack::SetThrottle(float Throttle)
-{
-	auto ForceApplied = GetForwardVector() * Throttle * TrackMaxDrivingForce;
-	auto ForceLocation = GetComponentLocation();    // Location of this track - see BP xyz vector
-
-	auto TankRoot = Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent());
-	TankRoot->AddForceAtLocation(ForceApplied, ForceLocation);
-
-	return;
-}
-
-
