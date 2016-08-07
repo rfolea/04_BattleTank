@@ -25,4 +25,10 @@ public:
 private:
 	UProjectileMovementComponent* ProjectileMovement = nullptr;
 
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	UStaticMeshComponent* CollisionMesh = nullptr;  // used to detect when projectile hits things
+
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	UParticleSystemComponent* LaunchBlast = nullptr;
+
 };
