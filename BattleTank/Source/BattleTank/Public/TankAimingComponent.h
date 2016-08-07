@@ -11,7 +11,8 @@ enum class EFiringState :uint8
 {
 	Reloading,
 	Aiming,
-	Locked
+	Locked,
+	OutOfAmmo
 };
 
 // Forward Declaration
@@ -35,6 +36,9 @@ public:
 	void Fire();                // will always fire in direction barrel is pointing, so no need for params
 
 	EFiringState GetFiringState() const;  // const because we don't want it changing any of the member variables
+
+	UFUNCTION(BlueprintCallable, Category = "Firing")
+	int GetRoundsLeft() const;
 
 protected:
 	UPROPERTY(BlueprintReadOnly, category = "State")
@@ -63,9 +67,11 @@ private:
 	//	UClass* ProjectileBlueprint; // Alternative - see lecture note TSubclass of ...
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-		float ReloadTimeInSeconds = 3;
+	float ReloadTimeInSeconds = 3;
 
 	double LastFireTime = 0;
 
 	FVector AimDirection;
+
+	int RoundsLeft = 3;
 };
