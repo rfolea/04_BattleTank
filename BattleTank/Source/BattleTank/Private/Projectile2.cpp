@@ -46,6 +46,15 @@ void AProjectile2::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, 
 	SetRootComponent(ImpactBlast);
 	CollisionMesh->DestroyComponent();
 
+	UGameplayStatics::ApplyRadialDamage( // all actors within the radius specified below will receive the damage specified below
+		this,
+		ProjectileDamage,
+		GetActorLocation(),
+		ExplosionForce->Radius,
+		UDamageType::StaticClass(),
+		TArray<AActor*>() // damage all actors);
+	);
+
 	FTimerHandle Timer;
 	GetWorld()->GetTimerManager().SetTimer(Timer, this, &AProjectile2::OnTimerExpire, DestroyDelay, false);
 }
