@@ -15,10 +15,14 @@ public:
 	// called by the engine when actor damage is dealt
 	virtual float ATank::TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEvent, class AController * EventInstigator, AActor * DamageCauser) override;
 
-	// Sets default values for this pawn's properties
-	ATank();
+	// Returns current Health as a percentage of starting health berween 0 and 1
+	UFUNCTION(BluePrintPure, Category = "Health")
+	float GetHealthPercent() const;
 
 private:
+	// Constructor - Sets default values for this pawn's properties
+	ATank();
+
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	int32 StartingHealth = 100;
 

@@ -10,7 +10,10 @@ ATank::ATank()
 	PrimaryActorTick.bCanEverTick = false;
 }
 
-
+float ATank::GetHealthPercent() const
+{
+	return (float)CurrentHealth / (float)StartingHealth;  // This forces a flaot divison instead of int32 division
+}
 float ATank::TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEvent, class AController * EventInstigator, AActor * DamageCauser)
 {
 	int32 DamagePoints = FPlatformMath::RoundToInt(DamageAmount);  // convert float to integer so we don't compare 0 vs .0000001
