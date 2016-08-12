@@ -21,7 +21,12 @@ private:
 								// begin play is in AActor ...
 								// In Actor, BeginPlay was written as a Virtual function which says it can be overwritten by any ansestor
 
+	virtual void SetPawn(APawn* InPawn) override;  // Gets called when the pawn gets possed
+
 	virtual void Tick(float DeltaTime) override;  // virtual is optional - says if we made a child of this onew any child could use it.
 												  // override makes sure there IS a overridable routine in the parent class
+
+	UFUNCTION()
+		void OnPossedTankDeath(); // Thi is what's going to get called when Tank Boradcasts it's death.
 
 };

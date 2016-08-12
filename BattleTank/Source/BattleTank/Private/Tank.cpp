@@ -14,6 +14,7 @@ float ATank::GetHealthPercent() const
 {
 	return (float)CurrentHealth / (float)StartingHealth;  // This forces a flaot divison instead of int32 division
 }
+
 float ATank::TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEvent, class AController * EventInstigator, AActor * DamageCauser)
 {
 	int32 DamagePoints = FPlatformMath::RoundToInt(DamageAmount);  // convert float to integer so we don't compare 0 vs .0000001
@@ -23,7 +24,8 @@ float ATank::TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEv
 
 	if (CurrentHealth <= 0)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("***** Tank Died *****"))
+//		UE_LOG(LogTemp, Warning, TEXT("***** Tank Died *****"))
+		OnDeath.Broadcast(); // Broadcast that tank died, let the listeners decide what they are going to do about it.
 	}
 
 	UE_LOG(LogTemp, Warning, TEXT("DamageAmount=%f, DamageToApply=%i"), DamageAmount, DamageToApply)
